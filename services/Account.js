@@ -50,7 +50,11 @@ class Account {
   async getAccounts(req, res, next) {
     try {
 
-      const bankAccounts = await this.prisma.bankAccount.findMany();
+      const bankAccounts = await this.prisma.bankAccount.findMany({
+        where: {
+          deleteAt: null
+        }
+      });
       
       res.json(bankAccounts);
   
@@ -63,7 +67,8 @@ class Account {
     try {    
       const bankAccountDetails = await this.prisma.bankAccount.findMany({      
         where: {
-          id: parseInt(req.params.id),        
+          id: parseInt(req.params.id),  
+          deleteAt: null      
         },    
         include: {
           user: true
@@ -79,6 +84,38 @@ class Account {
       res.json(bankAccountDetails);
   
     } catch(error) {
+      next(error);
+    }
+  }
+
+  // Soft delete
+  async deleteAccount(req, res, next) {
+    try {
+      const accountId = parseInt(req.params.id);
+      const bankAccount = await this.prisma.bankAccount.findUnique({
+        where: {
+          id: accountId
+        }
+      });
+  
+      if (!bankAccount) {
+        return res.status(404).json({
+          message: "Bank Account ID not found!"
+        });
+      }
+  
+      await this.prisma.bankAccount.update({
+        where: {
+          id: accountId
+        },
+        data: {
+          deleteAt: this.now
+        }
+      });
+  
+      res.json({ message: "success" });
+  
+    } catch (error) {
       next(error);
     }
   }
