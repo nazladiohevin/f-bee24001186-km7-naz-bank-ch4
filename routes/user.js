@@ -11,4 +11,6 @@ router.get("/", user.getUsers.bind(user));
 
 router.get("/:id", user.getUserById.bind(user));
 
+router.put("/:id", user.updateUser.bind(user))
+
 export { router };
