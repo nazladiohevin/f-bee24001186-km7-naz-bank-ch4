@@ -6,6 +6,7 @@ class Account {
   constructor() {
     this.prisma = new PrismaClient();
     this.accountSchema = this._createSchema(); 
+    this.now = new Date();
   }
 
   _createSchema() {
@@ -32,7 +33,8 @@ class Account {
           userId: parseInt(req.body.user_id),
           bankName: req.body.bank_name,
           bankAccountNumber: req.body.bank_account_number,        
-          balance: req.body.balance
+          balance: req.body.balance,
+          createdAt: this.now
         }
       });
   

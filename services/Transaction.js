@@ -4,7 +4,8 @@ import Joi from "joi";
 class Transaction {
   constructor() {    
     this.prisma = new PrismaClient();
-    this.transactionSchema = this._createSchema();    
+    this.transactionSchema = this._createSchema();
+    this.now = new Date();
   }
 
   _createSchema() {
@@ -47,7 +48,8 @@ class Transaction {
         data: {
           sourceAccountId,
           destinationAccountId,
-          amount: amount
+          amount: amount,
+          createdAt: this.now
         }
       });
 
