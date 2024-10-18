@@ -4,7 +4,8 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
   "keywords": [],
   "author": "Nazla Dio Hevin",
@@ -17,6 +18,7 @@
     "joi": "^17.13.3"
   },
   "devDependencies": {
+    "nodemon": "^3.1.7",
     "prisma": "^5.21.0"
   }
 }
