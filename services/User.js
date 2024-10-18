@@ -5,7 +5,8 @@ class User {
 
   constructor() {
     this.prisma = new PrismaClient();
-    this.userSchema = this._createSchema(); 
+    this.userSchema = this._createSchema();     
+    this.now = new Date();
   }
 
   _createSchema() {
@@ -13,7 +14,7 @@ class User {
       name: Joi.string().min(5).required(),
       email: Joi.string().email().required(),
       password: Joi.string().min(6).required(),
-      identity_type: Joi.string().valid('ktp', 'sim', 'paspor', 'ktm').required(),
+      identity_type: Joi.string().valid('ktp', 'sim', 'paspor', 'ktm').optional(),
       identity_number: Joi.string().optional(),
       address: Joi.string().optional(),
     });
@@ -34,6 +35,7 @@ class User {
           identityType: req.body.identity_type,
           identityNumber: req.body.identity_number,
           address: req.body.address,
+          createdAt: this.now      
         }
       } : undefined;
   
@@ -42,6 +44,7 @@ class User {
           name: req.body.name,
           email: req.body.email,
           password: req.body.password,
+          createdAt: this.now,
           profile
         }
       });
@@ -89,6 +92,53 @@ class User {
     } catch(error) {
       next(error);
     }
+  }
+
+  async updateUser(req, res, next) {
+    try {                 
+      const userId = parseInt(req.params.id);
+
+      // Check availability user
+      const user = await this.prisma.user.findUnique({
+        where: { id: userId },
+        include: { profile: true }
+      });
+
+      
+      const profile = user.profile ? {
+        profile: {
+          update: {
+            address: req.body.address,
+            updateAt: this.now
+          }
+        }
+      } : undefined;
+
+      // Check if address ready and profile null
+      if (req.body.address && profile == undefined) {
+        res.status(404).json({ message: "profile empty, please add profile" });
+        return;
+      }
+       
+      // Update user and profile
+      const userAfterUpdate = await this.prisma.user.update({
+        where: {
+          id: parseInt(req.params.id)
+        },
+        data: {
+          name: req.body.name,
+          updateAt: this.now,                 
+          profile
+        }    
+      });
+
+      if (userAfterUpdate) {
+        res.json({ message: "success" });
+      }
+
+    } catch(error) {
+      next(error);
+    } 
   }
 }
 
