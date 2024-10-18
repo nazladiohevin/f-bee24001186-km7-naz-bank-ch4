@@ -11,4 +11,6 @@ router.get("/", account.getAccounts.bind(account));
 
 router.get("/:id", account.getAccountById.bind(account));
 
+router.delete("/:id", account.deleteAccount.bind(account));
+
 export { router };
