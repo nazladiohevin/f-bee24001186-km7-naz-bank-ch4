@@ -1,0 +1,22 @@
+{
+  "name": "bank",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Nazla Dio Hevin",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@prisma/client": "^5.21.0",
+    "express": "^4.21.1",
+    "express-promise-router": "^4.1.1",
+    "joi": "^17.13.3"
+  },
+  "devDependencies": {
+    "prisma": "^5.21.0"
+  }
+}
