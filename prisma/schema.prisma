@@ -37,6 +37,7 @@ model BankAccount {
   transactionsTo    Transaction[] @relation("destinationAccount")
   createdAt         DateTime      @map("created_at")
   updateAt          DateTime?     @map("update_at")
+  deleteAt          DateTime?     @map("delete_at")
 
   user User @relation(fields: [userId], references: [id])
 
