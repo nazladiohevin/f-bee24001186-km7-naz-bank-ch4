@@ -1,10 +1,9 @@
 import { Router } from "express";
-import Transaction from "../services/Transaction.js";
+import TransactionController from "../controllers/transactionController.js";
 
 const router = new Router();
 
-
-const transaction = new Transaction();
+const transaction = new TransactionController();
 
 router.post("/", transaction.createTransaction.bind(transaction));
 
