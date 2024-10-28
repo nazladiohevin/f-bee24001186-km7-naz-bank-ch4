@@ -1,9 +1,9 @@
 import { Router } from "express";
-import User from "../services/User.js";
+import UserController from "../controllers/userController.js";
 
 const router = new Router();
 
-const user = new User();
+const user = new UserController();
 
 router.post("/", user.createUser.bind(user));
 

@@ -20,125 +20,76 @@ class User {
     });
   }
 
-  async createUser(req, res, next) {
-    try {
-
-      const { error } = this.userSchema.validate(req.body);
-  
-      if (error) {
-        next(error);
-        return;
-      }
-  
-      const profile = (req.body.identity_type && req.body.identity_number) ? {
-        create: {
-          identityType: req.body.identity_type,
-          identityNumber: req.body.identity_number,
-          address: req.body.address,
-          createdAt: this.now      
-        }
-      } : undefined;
-  
-      let user = await this.prisma.user.create({
-        data: {
-          name: req.body.name,
-          email: req.body.email,
-          password: req.body.password,
-          createdAt: this.now,
-          profile
-        }
-      });
-  
-      if (user) {
-        res.json({ message: "success" });
-      }
-  
-  
-    } catch(error) {
-      next(error);
-    }  
+  validateUser(data) {
+    return this.userSchema.validate(data);
   }
 
-  async getUsers(req, res, next) {
-    try {
+  async createUser(data) {  
+    const profile = (data.identity_type && data.identity_number) ? {
+      create: {
+        identityType: data.identity_type,
+        identityNumber: data.identity_number,
+        address: data.address,
+        createdAt: this.now      
+      }
+    } : undefined;
 
-      const users = await this.prisma.user.findMany();
-      
-      res.json(users);
-  
-    } catch(error) {
-      next(error);
+    return this.prisma.user.create({
+      data: {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        createdAt: this.now,
+        profile
+      }
+    });     
+  }
+
+  async getUsers() {    
+    return this.prisma.user.findMany();
+  }
+
+  async getUserById(params) {         
+    return this.prisma.user.findMany({
+      where: {
+        id: parseInt(params.id),        
+      },
+      include: { profile: true }
+    });
+  }
+
+  async updateUser(userId, data) {                     
+    // Check availability user
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      include: { profile: true }
+    });
+
+    
+    const profile = user.profile ? {      
+      update: {
+        address: data.address,
+        updateAt: this.now
+      }      
+    } : undefined;
+
+    // Check if address ready and profile null
+    if (data.address && profile == undefined) {
+      res.status(404).json({ message: "profile empty, please add profile" });
+      return;
     }
-  }
-
-  async getUserById(req, res, next) {
-    try {        
-      const users = await this.prisma.user.findMany({
-        where: {
-          id: parseInt(req.params.id),        
-        },
-        include: { profile: true }
-      });
-  
-      // if user id not found
-      if (users.length == 0) {      
-        return res.status(404).json({
-          message: "User ID not found!"
-        });
-      }
       
-      res.json(users);
-  
-    } catch(error) {
-      next(error);
-    }
-  }
-
-  async updateUser(req, res, next) {
-    try {                 
-      const userId = parseInt(req.params.id);
-
-      // Check availability user
-      const user = await this.prisma.user.findUnique({
-        where: { id: userId },
-        include: { profile: true }
-      });
-
-      
-      const profile = user.profile ? {
-        profile: {
-          update: {
-            address: req.body.address,
-            updateAt: this.now
-          }
-        }
-      } : undefined;
-
-      // Check if address ready and profile null
-      if (req.body.address && profile == undefined) {
-        res.status(404).json({ message: "profile empty, please add profile" });
-        return;
-      }
-       
-      // Update user and profile
-      const userAfterUpdate = await this.prisma.user.update({
-        where: {
-          id: parseInt(req.params.id)
-        },
-        data: {
-          name: req.body.name,
-          updateAt: this.now,                 
-          profile
-        }    
-      });
-
-      if (userAfterUpdate) {
-        res.json({ message: "success" });
-      }
-
-    } catch(error) {
-      next(error);
-    } 
+    // Update user and profile
+    return this.prisma.user.update({
+      where: {
+        id: userId
+      },
+      data: {
+        name: data.name,
+        updateAt: this.now,                 
+        profile
+      }    
+    });    
   }
 }
 

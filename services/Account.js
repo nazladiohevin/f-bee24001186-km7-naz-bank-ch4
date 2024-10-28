@@ -18,106 +18,52 @@ class Account {
     });
   }
 
-  async createAccount(req, res, next) {
-    try {
-
-      const { error } = this.accountSchema.validate(req.body);
-  
-      if (error) {
-        next(error);
-        return;
-      }
-  
-      let account = await this.prisma.bankAccount.create({
-        data: {
-          userId: parseInt(req.body.user_id),
-          bankName: req.body.bank_name,
-          bankAccountNumber: req.body.bank_account_number,        
-          balance: req.body.balance,
-          createdAt: this.now
-        }
-      });
-  
-      if (account) {
-        res.json({ message: "success" });      
-      }
-  
-    } catch(error) {
-      next(error);
-    }  
+  validateAccount(data) {
+    return this.accountSchema.validate(data);
   }
 
-  async getAccounts(req, res, next) {
-    try {
-
-      const bankAccounts = await this.prisma.bankAccount.findMany({
-        where: {
-          deleteAt: null
-        }
-      });
-      
-      res.json(bankAccounts);
-  
-    } catch(error) {
-      next(error);
-    }
+  async createAccount(data) {    
+    return this.prisma.bankAccount.create({
+      data: {
+        userId: parseInt(data.user_id),
+        bankName: data.bank_name,
+        bankAccountNumber: data.bank_account_number,        
+        balance: data.balance,
+        createdAt: this.now
+      }
+    });
   }
 
-  async getAccountById(req, res, next) {
-    try {    
-      const bankAccountDetails = await this.prisma.bankAccount.findMany({      
-        where: {
-          id: parseInt(req.params.id),  
-          deleteAt: null      
-        },    
-        include: {
-          user: true
-        }
-      });
-  
-      if (bankAccountDetails.length == 0) {      
-        return res.status(404).json({
-          message: "Account ID not found!"
-        });
+  async getAccounts() {
+    return this.prisma.bankAccount.findMany({
+      where: {
+        deleteAt: null
       }
-      
-      res.json(bankAccountDetails);
-  
-    } catch(error) {
-      next(error);
-    }
+    });
+  }
+
+  async getAccountById(accountId) {    
+    return this.prisma.bankAccount.findMany({      
+      where: {
+        id: parseInt(accountId),  
+        deleteAt: null      
+      },    
+      include: {
+        user: true
+      }
+    });
   }
 
   // Soft delete
-  async deleteAccount(req, res, next) {
-    try {
-      const accountId = parseInt(req.params.id);
-      const bankAccount = await this.prisma.bankAccount.findUnique({
-        where: {
-          id: accountId
-        }
-      });
-  
-      if (!bankAccount) {
-        return res.status(404).json({
-          message: "Bank Account ID not found!"
-        });
+  async deleteAccount(accountId) {  
+    await this.prisma.bankAccount.update({
+      where: {
+        id: accountId
+      },
+      data: {
+        deleteAt: this.now
       }
-  
-      await this.prisma.bankAccount.update({
-        where: {
-          id: accountId
-        },
-        data: {
-          deleteAt: this.now
-        }
-      });
-  
-      res.json({ message: "success" });
-  
-    } catch (error) {
-      next(error);
-    }
+    });
   }
 }
 

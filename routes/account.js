@@ -1,9 +1,9 @@
 import { Router } from "express";
-import Account from "../services/Account.js";
+import AccountController from "../controllers/accountController.js";
 
 const router = new Router();
 
-const account = new Account();
+const account = new AccountController();
 
 router.post("/", account.createAccount.bind(account));
 
