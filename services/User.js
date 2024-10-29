@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import Joi from "joi";
+import bcrypt from "bcrypt";
 
 class User {
 
@@ -24,7 +25,13 @@ class User {
     return this.userSchema.validate(data);
   }
 
-  async createUser(data) {  
+  async getUserByEmail(email){
+    return this.prisma.user.findUnique({
+      where: { email }
+    });  
+  };
+
+  async register(data) {  
     const profile = (data.identity_type && data.identity_number) ? {
       create: {
         identityType: data.identity_type,
@@ -34,11 +41,14 @@ class User {
       }
     } : undefined;
 
+    const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS);
+    const password = await bcrypt.hash(data.password, saltRounds);
+
     return this.prisma.user.create({
       data: {
         name: data.name,
         email: data.email,
-        password: data.password,
+        password,
         createdAt: this.now,
         profile
       }
@@ -49,11 +59,11 @@ class User {
     return this.prisma.user.findMany();
   }
 
-  async getUserById(params) {         
-    return this.prisma.user.findMany({
-      where: {
-        id: parseInt(params.id),        
-      },
+  async getUserById(id) {  
+    const userId = parseInt(id);    
+    
+    return this.prisma.user.findUnique({
+      where: { id: userId },
       include: { profile: true }
     });
   }
