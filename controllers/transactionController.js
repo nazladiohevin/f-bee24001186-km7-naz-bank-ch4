@@ -18,7 +18,7 @@ class TransactionController {
       const transaction = await this.transaction.createTransaction(req.body);
 
       if (transaction) {
-        res.json({ message: "success" });
+        res.status(200).json({ message: "success" });
       }
 
     } catch (error) {

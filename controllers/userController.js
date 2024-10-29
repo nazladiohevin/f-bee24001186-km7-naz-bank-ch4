@@ -19,7 +19,7 @@ class UserController {
       const user = await this.user.createUser(req.body);
 
       if (user) {
-        res.json({ message: "success" });
+        res.status(200).json({ message: "success" });
       }
   
     } catch(error) {
