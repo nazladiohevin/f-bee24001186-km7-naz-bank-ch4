@@ -1,0 +1,1005 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Binar - Banking API",
+    "description": "Binar Gold\n\nBanking API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "User",
+      "description": "Access user"
+    },
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "Account"
+    },
+    {
+      "name": "Transaction"
+    }
+  ],
+  "paths": {
+    "/api/v1/users/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "get user by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID user",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "id": 17,
+                  "email": "nobita@gmail.com",
+                  "name": "Nobita Nobi",
+                  "password": "$2b$10$eLeWH3fHm1OjL2KsS44uEei.Ka1snyIszkcpzPcIYHFuAM2cMu1HO",
+                  "createdAt": "2024-10-29T13:36:27.709Z",
+                  "updateAt": null,
+                  "profile": {
+                    "id": 3,
+                    "userId": 17,
+                    "address": null,
+                    "createdAt": "2024-10-29T16:13:25.155Z",
+                    "identityNumber": "23723728372",
+                    "identityType": "ktp",
+                    "updateAt": null
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "User ID not found!"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "update user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID user",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Djenggot"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "success",
+                  "data": {
+                    "id": 18,
+                    "email": "naruto@gmail.com",
+                    "name": "Djenggot",
+                    "password": "$2b$10$xY0Zs4ObkY2Hsvs8UW1/MOVr/jm2LwY0by1lXWrxkjmSSUcfDsMvy",
+                    "createdAt": "2024-10-29T17:35:59.435Z",
+                    "updateAt": "2024-10-29T18:09:58.880Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "get all users",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "email": "stefford@gmail.com",
+                    "name": "Stepuniues",
+                    "password": "$2b$10$eLeWH3fHm1OjL2KsS44uEei.Ka1snyIszkcpzPcIYHFuAM2cMu1HO",
+                    "createdAt": "2024-10-18T13:02:03.016Z",
+                    "updateAt": "2024-10-29T10:54:21.898Z"
+                  },
+                  {
+                    "id": 17,
+                    "email": "nobita@gmail.com",
+                    "name": "Nobita Nobi",
+                    "password": "$2b$10$eLeWH3fHm1OjL2KsS44uEei.Ka1snyIszkcpzPcIYHFuAM2cMu1HO",
+                    "createdAt": "2024-10-29T13:36:27.709Z",
+                    "updateAt": null
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/{id}/profile": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "create user profile",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID user",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "identityType": {
+                    "type": "string",
+                    "example": "ktp"
+                  },
+                  "identityNumber": {
+                    "type": "integer",
+                    "example": "4545454"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "success",
+                  "data": {
+                    "id": 4,
+                    "userId": 18,
+                    "address": null,
+                    "createdAt": "2024-10-29T18:00:15.718Z",
+                    "identityNumber": "4545454",
+                    "identityType": "ktp",
+                    "updateAt": null
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Profile has been created"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "register",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Uchiha Sasuke"
+                  },
+                  "password": {
+                    "type": "integer",
+                    "example": "123456"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "sasuke@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "success",
+                  "data": {
+                    "id": 20,
+                    "email": "sasuke@gmail.com",
+                    "name": "Uchiha Sasuke",
+                    "password": "$2b$10$UBGiohvZwvbyyGzDGreyte346Zu/lue4cohnlo8jZeZ2CUtWHkFSC",
+                    "createdAt": "2024-10-29T17:39:57.576Z",
+                    "updateAt": null
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Email already use"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "login",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "nobita@gmail.com"
+                  },
+                  "password": {
+                    "type": "integer",
+                    "example": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Success login",
+                  "data": {
+                    "id": 17,
+                    "email": "nobita@gmail.com",
+                    "name": "Nobita Nobi",
+                    "password": "$2b$10$eLeWH3fHm1OjL2KsS44uEei.Ka1snyIszkcpzPcIYHFuAM2cMu1HO",
+                    "createdAt": "2024-10-29T13:36:27.709Z",
+                    "updateAt": null,
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImlhdCI6MTczMDIyMzk0NCwiZXhwIjoxNzMwNDgzMTQ0fQ.7LUQF6n_4PGUA55PrMeFFEa1YJ8gBaKi3Ajjolu87fE"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Invalid email or password"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/accounts": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "get all account",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": [
+                  {
+                    "id": 2,
+                    "balance": "1020000",
+                    "bankAccountNumber": "828323728",
+                    "bankName": "bca",
+                    "createdAt": "2024-10-18T13:44:12.473Z",
+                    "updateAt": null,
+                    "userId": 2,
+                    "deleteAt": null
+                  },
+                  {
+                    "id": 3,
+                    "balance": "1200000",
+                    "bankAccountNumber": "23232323244",
+                    "bankName": "mandiri",
+                    "createdAt": "2024-10-28T20:08:39.805Z",
+                    "updateAt": null,
+                    "userId": 2,
+                    "deleteAt": null
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "create account",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "userId": {
+                    "type": "integer",
+                    "example": "17"
+                  },
+                  "bankName": {
+                    "type": "string",
+                    "example": "bri"
+                  },
+                  "bankAccountNumber": {
+                    "type": "integer",
+                    "example": "8748374837438"
+                  },
+                  "balance": {
+                    "type": "integer",
+                    "example": "3400000"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "success",
+                  "data": {
+                    "id": 4,
+                    "balance": "3400000",
+                    "bankAccountNumber": "8748374837438",
+                    "bankName": "bri",
+                    "createdAt": "2024-10-29T18:23:38.897Z",
+                    "updateAt": null,
+                    "userId": 17,
+                    "deleteAt": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/accounts/{id}": {
+      "delete": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "delete account",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "account ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "success"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Bank Account ID not found!"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "get account by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "account ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "id": 3,
+                  "balance": "1200000",
+                  "bankAccountNumber": "23232323244",
+                  "bankName": "mandiri",
+                  "createdAt": "2024-10-28T20:08:39.805Z",
+                  "updateAt": null,
+                  "userId": 2,
+                  "deleteAt": null,
+                  "user": {
+                    "id": 2,
+                    "email": "julius@gmail.com",
+                    "name": "Julius Nova Crono",
+                    "password": "123456",
+                    "createdAt": "2024-10-18T13:18:45.268Z",
+                    "updateAt": "2024-10-18T13:42:31.582Z"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Account ID not found!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/transactions": {
+      "post": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "create transaction",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "sourceAccountId": {
+                    "type": "integer",
+                    "example": "3"
+                  },
+                  "destinationAccountId": {
+                    "type": "integer",
+                    "example": "4"
+                  },
+                  "amount": {
+                    "type": "integer",
+                    "example": "120000"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "success"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Source Account ID not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "get all transactions",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "amount": "10000",
+                    "createdAt": "2024-10-18T13:46:22.434Z",
+                    "destinationAccountId": 2,
+                    "sourceAccountId": 1,
+                    "updateAt": null
+                  },
+                  {
+                    "id": 2,
+                    "amount": "10000",
+                    "createdAt": "2024-10-28T19:44:05.919Z",
+                    "destinationAccountId": 2,
+                    "sourceAccountId": 1,
+                    "updateAt": null
+                  },
+                  {
+                    "id": 3,
+                    "amount": "120000",
+                    "createdAt": "2024-10-29T18:43:11.802Z",
+                    "destinationAccountId": 4,
+                    "sourceAccountId": 3,
+                    "updateAt": null
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/{id}": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "get transaction by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "transaction id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": [
+                  {
+                    "id": 3,
+                    "amount": "120000",
+                    "createdAt": "2024-10-29T18:43:11.802Z",
+                    "destinationAccountId": 4,
+                    "sourceAccountId": 3,
+                    "updateAt": null,
+                    "sourceAccount": {
+                      "id": 3,
+                      "balance": "1080000",
+                      "bankAccountNumber": "23232323244",
+                      "bankName": "mandiri",
+                      "createdAt": "2024-10-28T20:08:39.805Z",
+                      "updateAt": null,
+                      "userId": 2,
+                      "deleteAt": null
+                    },
+                    "destinationAccount": {
+                      "id": 4,
+                      "balance": "3520000",
+                      "bankAccountNumber": "8748374837438",
+                      "bankName": "bri",
+                      "createdAt": "2024-10-29T18:23:38.897Z",
+                      "updateAt": null,
+                      "userId": 17,
+                      "deleteAt": null
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Transaction ID not found!"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -11,9 +11,9 @@ class Account {
 
   _createSchema() {
     return Joi.object({
-      user_id: Joi.number().integer().positive().required(),
-      bank_name: Joi.string().min(3).valid("bri", "bni", "mandiri", "bca", "muamalat").required(),
-      bank_account_number: Joi.string().min(5).required(),
+      userId: Joi.number().integer().positive().required(),
+      bankName: Joi.string().min(3).valid("bri", "bni", "mandiri", "bca", "muamalat").required(),
+      bankAccountNumber: Joi.string().min(5).required(),
       balance: Joi.number().positive()
     });
   }
@@ -25,9 +25,9 @@ class Account {
   async createAccount(data) {    
     return this.prisma.bankAccount.create({
       data: {
-        userId: parseInt(data.user_id),
-        bankName: data.bank_name,
-        bankAccountNumber: data.bank_account_number,        
+        userId: parseInt(data.userId),
+        bankName: data.bankName,
+        bankAccountNumber: data.bankAccountNumber,        
         balance: data.balance,
         createdAt: this.now
       }
@@ -43,7 +43,7 @@ class Account {
   }
 
   async getAccountById(accountId) {    
-    return this.prisma.bankAccount.findMany({      
+    return this.prisma.bankAccount.findUnique({      
       where: {
         id: parseInt(accountId),  
         deleteAt: null      

@@ -10,8 +10,8 @@ class Transaction {
 
   _createSchema() {
     return Joi.object({
-      source_account_id: Joi.number().integer().positive().greater(0).required(),
-      destination_account_id: Joi.number().integer().positive().greater(0).required(),
+      sourceAccountId: Joi.number().integer().positive().greater(0).required(),
+      destinationAccountId: Joi.number().integer().positive().greater(0).required(),
       amount: Joi.number().positive().min(10000).required(),
     });
   }
@@ -20,9 +20,9 @@ class Transaction {
     return this.transactionSchema.validate(data)
   }
 
-  async createTransaction(data) {
-    const sourceAccountId = parseInt(data.source_account_id);
-    const destinationAccountId = parseInt(data.destination_account_id);
+  async createTransaction(data, res) {
+    const sourceAccountId = parseInt(data.sourceAccountId);
+    const destinationAccountId = parseInt(data.destinationAccountId);
     const amount = data.amount;
 
     // Check if accounts exist

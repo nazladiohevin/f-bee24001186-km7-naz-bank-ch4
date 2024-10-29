@@ -1,5 +1,7 @@
 import express from "express";
 import { configureRoutes } from "./routes/index.js";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "./swagger-output.json" with { type: "json" }
 
 const app =  express();
 const port = 3000;
@@ -7,6 +9,8 @@ const port = 3000;
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Route settings
 configureRoutes(app);
