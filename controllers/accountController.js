@@ -14,7 +14,7 @@ class AccountController {
       }
 
       const account = await this.account.createAccount(req.body);
-      res.json({ message: "success" });
+      res.status(200).json({ message: "success" });
     } catch (error) {
       next(error);
     }
