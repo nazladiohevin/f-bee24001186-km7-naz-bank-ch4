@@ -3,13 +3,13 @@ import User from "../services/User.js";
 class UserController {
 
   constructor() {
-    this.user = new User();
+    this.userService = new User();
   }
 
   async getUsers(req, res, next) {
     try {
 
-      const users = await this.user.getUsers();
+      const users = await this.userService.getUsers();
 
       res.json(users);
     } catch(error) {
@@ -17,9 +17,32 @@ class UserController {
     }
   }
 
+  async createUserProfile(req, res, next) {
+    try {
+      const { id: userId } = req.params;
+      
+      const userProfile = await this.userService.getProfileByUserId(userId);
+      console.log(userProfile)
+      if (userProfile) {
+        return res.status(400).json({ message: "Profile has been created" });
+      }
+
+      const profile = await this.userService.createUserProfile(userId, req.body);
+
+      if (!profile) {
+        throw new Error("Database Error");
+      }
+
+      res.status(200).json({ message: "success", data: profile });
+
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getUserById(req, res, next) {
     try {
-      const user = await this.user.getUserById(req.params.id);
+      const user = await this.userService.getUserById(req.params.id);
 
       // if user id not found
       if (user.length == 0) {      
@@ -38,7 +61,7 @@ class UserController {
     try {
       
       const userId = parseInt(req.params.id);
-      const userAfterUpdate = await this.user.updateUser(userId, req.body);
+      const userAfterUpdate = await this.userService.updateUser(userId, req.body);
     
 
       if (userAfterUpdate) {
