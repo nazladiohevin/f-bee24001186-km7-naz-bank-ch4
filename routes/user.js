@@ -1,16 +1,13 @@
 import { Router } from "express";
 import UserController from "../controllers/userController.js";
+import { isAuthorized } from "../middleware/auth.js";
 
 const router = new Router();
 
 const user = new UserController();
 
-router.post("/", user.createUser.bind(user));
-
-router.get("/", user.getUsers.bind(user));
-
-router.get("/:id", user.getUserById.bind(user));
-
-router.put("/:id", user.updateUser.bind(user))
+router.get("/", isAuthorized, user.getUsers.bind(user));
+router.get("/:id", isAuthorized, user.getUserById.bind(user));
+router.put("/:id", isAuthorized, user.updateUser.bind(user))
 
 export { router };

@@ -6,27 +6,6 @@ class UserController {
     this.user = new User();
   }
 
-  async createUser(req, res, next) {
-    try {
-
-      const { error } = this.user.validateUser(req.body);
-  
-      if (error) {
-        next(error);
-        return;
-      }
-     
-      const user = await this.user.createUser(req.body);
-
-      if (user) {
-        res.status(200).json({ message: "success" });
-      }
-  
-    } catch(error) {
-      next(error);
-    }  
-  }
-
   async getUsers(req, res, next) {
     try {
 
@@ -40,7 +19,7 @@ class UserController {
 
   async getUserById(req, res, next) {
     try {
-      const user = await this.user.getUserById(req.params);
+      const user = await this.user.getUserById(req.params.id);
 
       // if user id not found
       if (user.length == 0) {      
