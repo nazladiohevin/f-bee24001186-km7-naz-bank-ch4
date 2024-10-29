@@ -48,7 +48,7 @@ export class AuthController {
   async register(req, res, next) {
     try {
       
-      const { error: joiError } = this.user.validateUser(req.body);
+      const { error: joiError } = this.userService.validateUser(req.body);
       
       if (joiError) return next(joiError);             
 
@@ -61,10 +61,11 @@ export class AuthController {
       
       const userCreated = await this.userService.register(req.body);
 
-      if (userCreated) {
-        return res.status(200).json({ message: "success" });
+      if (!userCreated) {
+        throw new Error("Database error");
       }
-  
+      
+      return res.status(200).json({ message: "success", data: userCreated });
     } catch(error) {
       next(error);
     }  

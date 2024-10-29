@@ -11,7 +11,7 @@ class UserController {
 
       const users = await this.userService.getUsers();
 
-      res.json(users);
+      res.status(200).json(users);
     } catch(error) {
       next(error);
     }
@@ -45,7 +45,7 @@ class UserController {
       const user = await this.userService.getUserById(req.params.id);
 
       // if user id not found
-      if (user.length == 0) {      
+      if (!user) {      
         return res.status(404).json({
           message: "User ID not found!"
         });
@@ -65,7 +65,7 @@ class UserController {
     
 
       if (userAfterUpdate) {
-        res.json({ message: "success" });
+        res.json({ message: "success", data: userAfterUpdate });
       }
 
     } catch (error) {

@@ -15,7 +15,7 @@ class TransactionController {
         return;
       }
 
-      const transaction = await this.transaction.createTransaction(req.body);
+      const transaction = await this.transaction.createTransaction(req.body, res);
 
       if (transaction) {
         res.status(200).json({ message: "success" });
