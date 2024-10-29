@@ -55,6 +55,26 @@ class User {
     });     
   }
 
+  
+  async createUserProfile(userId, data) {
+    userId = parseInt(userId);
+
+    return this.prisma.profile.create({
+      data: {
+        userId,
+        identityType: data.identityType,
+        identityNumber: data.identityNumber,
+        createdAt: new Date()
+      }
+    });
+  }
+
+  async getProfileByUserId(userId) {
+    return this.prisma.profile.findUnique({
+      where: { userId: parseInt(userId) }
+    });
+  }
+
   async getUsers() {    
     return this.prisma.user.findMany();
   }
