@@ -32,15 +32,6 @@ class User {
   };
 
   async register(data) {  
-    const profile = (data.identity_type && data.identity_number) ? {
-      create: {
-        identityType: data.identity_type,
-        identityNumber: data.identity_number,
-        address: data.address,
-        createdAt: this.now      
-      }
-    } : undefined;
-
     const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS);
     const password = await bcrypt.hash(data.password, saltRounds);
 
@@ -49,8 +40,7 @@ class User {
         name: data.name,
         email: data.email,
         password,
-        createdAt: this.now,
-        profile
+        createdAt: this.now,        
       }
     });     
   }
@@ -88,36 +78,14 @@ class User {
     });
   }
 
-  async updateUser(userId, data) {                     
-    // Check availability user
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-      include: { profile: true }
-    });
-
-    
-    const profile = user.profile ? {      
-      update: {
-        address: data.address,
-        updateAt: this.now
-      }      
-    } : undefined;
-
-    // Check if address ready and profile null
-    if (data.address && profile == undefined) {
-      res.status(404).json({ message: "profile empty, please add profile" });
-      return;
-    }
-      
-    // Update user and profile
+  async updateUser(userId, data) {                         
     return this.prisma.user.update({
       where: {
         id: userId
       },
       data: {
         name: data.name,
-        updateAt: this.now,                 
-        profile
+        updateAt: this.now,                         
       }    
     });    
   }

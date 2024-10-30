@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import User from "../services/User.js";
 
-export class AuthController {
+export default class AuthController {
 
   constructor() {
     this.userService = new User();

@@ -22,7 +22,7 @@ class UserController {
       const { id: userId } = req.params;
       
       const userProfile = await this.userService.getProfileByUserId(userId);
-      console.log(userProfile)
+      
       if (userProfile) {
         return res.status(400).json({ message: "Profile has been created" });
       }
@@ -61,8 +61,14 @@ class UserController {
     try {
       
       const userId = parseInt(req.params.id);
-      const userAfterUpdate = await this.userService.updateUser(userId, req.body);
-    
+
+      const user = await this.userService.getUserById(userId);
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const userAfterUpdate = await this.userService.updateUser(userId, req.body);    
 
       if (userAfterUpdate) {
         res.json({ message: "success", data: userAfterUpdate });
