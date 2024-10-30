@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, jest } from "@jest/globals";
-import TransactionController from "../controllers/transactionController";
-import Transaction from '../services/Transaction';
+import TransactionController from "../../controllers/transactionController";
+import Transaction from '../../services/Transaction';
 
 describe("TransactionController", () => {
   let transactionController;

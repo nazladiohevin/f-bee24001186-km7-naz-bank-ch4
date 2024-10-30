@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, jest } from "@jest/globals";
-import AccountController from "../controllers/accountController.js";
-import Account from "../services/Account.js";
+import AccountController from "../../controllers/accountController.js";
+import Account from "../../services/Account.js";
 
 
 describe("AccountController", () => {
@@ -31,17 +31,19 @@ describe("AccountController", () => {
   });
 
   describe("createAccount", () => {
-    it("should return success message if account is created", async () => {      
-      jest.spyOn(Account.prototype, 'validateAccount').mockReturnValue({ error: null });
-      jest.spyOn(Account.prototype, 'createAccount').mockResolvedValue({});
-
-      req.body = { 
+    it("should return success message and created account data if account is created", async () => {      
+      const mockAccount = {
         userId: 1,
         bankName: 'mandiri',
         bankAccountNumber: '12232323232',
         balance: 1200000,
         createdAt: date
-      };
+      }
+
+      jest.spyOn(Account.prototype, 'validateAccount').mockReturnValue({ error: null });
+      jest.spyOn(Account.prototype, 'createAccount').mockResolvedValue(mockAccount);
+
+      req.body = mockAccount;
 
       await accountController.createAccount(req, res, next);
 
@@ -49,7 +51,7 @@ describe("AccountController", () => {
       expect(Account.prototype.validateAccount).toHaveBeenCalledWith(req.body);
       expect(Account.prototype.createAccount).toHaveBeenCalledWith(req.body);
       
-      expect(res.json).toHaveBeenCalledWith({ message: "success" });
+      expect(res.json).toHaveBeenCalledWith({ message: "success", data: mockAccount });
     });
 
     it("should call next with error if validation fails", async () => {
