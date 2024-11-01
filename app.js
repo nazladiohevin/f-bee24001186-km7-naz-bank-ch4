@@ -1,5 +1,5 @@
 import express from "express";
-import { configureRoutes } from "./routes/index.js";
+import { configureRoutes } from "./src/routes/index.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./swagger-output.json" with { type: "json" }
 
