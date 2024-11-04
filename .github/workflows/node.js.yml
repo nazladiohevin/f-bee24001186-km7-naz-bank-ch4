@@ -13,9 +13,23 @@ jobs:
     container:
       image: node:21
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      # Step untuk checkout kode dari repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step untuk setup versi Node.js yang akan digunakan
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 21
-      - run: npm install
-      - run: npm test
+          node-version: '21'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate Prisma
+        run: npx prisma generate
+
+      # Jalankan pengujian menggunakan Jest dengan flag experimental VM modules
+      - name: Run tests
+        run: npm test
