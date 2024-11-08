@@ -156,6 +156,21 @@ class UserController {
     }    
   }
 
+  async getUserProfile(req, res, next) {
+    const { id: userId } = req.params;
+
+    try {
+      const userProfile = await this.profileService.getProfileByUserId(userId);
+      if (!userProfile) {
+        return res.status(404).json({ message: "Profile not found" });
+      }      
+
+      return res.status(200).json({ profile: userProfile });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getUserById(req, res, next) {
     try {
       const user = await this.userService.getUserById(req.params.id);
