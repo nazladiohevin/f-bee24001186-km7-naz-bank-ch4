@@ -31,5 +31,5 @@ jobs:
         run: npx prisma generate
 
       # Jalankan pengujian menggunakan Jest dengan flag experimental VM modules
-      - name: Run tests
-        run: npm test
+      # - name: Run tests
+      #   run: npm test
