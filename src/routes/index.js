@@ -7,5 +7,5 @@ export const configureRoutes = (app) => {
   app.use('/api/v1/users', users);
   app.use('/api/v1/accounts', accounts);
   app.use('/api/v1/transactions', transactions);
-  app.use('/api/v1/auth', auth);
+  app.use('/api/v1/auth', auth);  
 };

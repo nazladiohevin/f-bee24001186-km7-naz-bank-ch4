@@ -64,6 +64,9 @@ model Profile {
   identityType   Identity_Type @map("identity_type")
   identityNumber String        @map("identity_number")
   address        String?
+  avatarUrl      String?       @map("avatar_url")
+  avatarId       String?       @map("avatarId")
+  avatarName     String?       @map("avatar_name")
   createdAt      DateTime      @map("created_at")
   updateAt       DateTime?     @map("update_at")
 
