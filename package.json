@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "prisma:format": "npx prisma format",
+    "prisma:migrate-dev": "npx prisma migrate dev --name",
+    "prisma:generate": "npx prisma generate"
   },
   "keywords": [],
   "author": "Nazla Dio Hevin",
@@ -13,11 +16,15 @@
   "description": "",
   "dependencies": {
     "@prisma/client": "^5.21.0",
+    "@types/multer": "^1.4.12",
     "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "express-promise-router": "^4.1.1",
+    "imagekit": "^5.2.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
