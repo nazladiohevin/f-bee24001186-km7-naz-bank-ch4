@@ -39,7 +39,7 @@ jobs:
 
       - name: Set up Cloud SQL instance variable        
         run: |
-          echo -e "\n\nbeta_settings:" >> app.yaml
+          echo -e "\nbeta_settings:" >> app.yaml
           echo "  cloud_sql_instances: '${{ secrets.INSTANCE_CONNECTION_NAME }}'" >> app.yaml
       
       - name: Check app.yaml
@@ -57,7 +57,10 @@ jobs:
           echo "  JWT_SECRET_KEY: '${{ secrets.JWT_SECRET_KEY }}'" >> env.yaml          
           echo "  IMAGEKIT_PUBLIC_KEY: '${{ secrets.IMAGEKIT_PUBLIC_KEY }}'" >> env.yaml
           echo "  IMAGEKIT_SECRET_KEY: '${{ secrets.IMAGEKIT_SECRET_KEY }}'" >> env.yaml
-          echo "  IMAGEKIT_URL_ENDPOINT: '${{ secrets.IMAGEKIT_URL_ENDPOINT }}'" >> env.yaml          
+          echo "  IMAGEKIT_URL_ENDPOINT: '${{ secrets.IMAGEKIT_URL_ENDPOINT }}'" >> env.yaml        
+
+      - name: Check env.yaml
+        run: cat env.yaml
 
       - name: Deploy to Google App Engine
         run: |
