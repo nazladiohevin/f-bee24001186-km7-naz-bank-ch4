@@ -47,8 +47,7 @@ jobs:
 
       - name: Create env.yaml with Secrets
         run: |          
-          echo "env_variables:" > env.yaml
-          echo "  PORT: '${{ secrets.PORT }}'" >> env.yaml
+          echo "env_variables:" > env.yaml          
           echo "  NODE_ENV: '${{ secrets.NODE_ENV }}'" >> env.yaml
           echo "  INSTANCE_CONNECTION_NAME: '${{ secrets.INSTANCE_CONNECTION_NAME }}'" >> env.yaml
           echo "  DATABASE_URL: '${{ secrets.DATABASE_URL }}'" >> env.yaml
