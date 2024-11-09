@@ -4,7 +4,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./swagger-output.json" with { type: "json" }
 
 const app =  express();
-const port = 3000;
+const port = process.env.PORT || 3000;;
 
 // middleware
 app.use(express.json());

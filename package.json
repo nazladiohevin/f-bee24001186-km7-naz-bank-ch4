@@ -3,19 +3,26 @@
   "version": "1.0.0",
   "main": "app.js",
   "type": "module",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest",
-    "start": "nodemon app.js",
+    "postinstall": "npx prisma generate",
+    "start": "node app.js",
+    "start:dev": "nodemon app.js",
+    "prisma:deploy": "npx prisma migrate deploy",
+    "gcloud:deploy": "gcloud app deploy",
+    "gcloud:logs": "gcloud app logs tail -s default",
     "prisma:format": "npx prisma format",
-    "prisma:migrate-dev": "npx prisma migrate dev --name",
-    "prisma:generate": "npx prisma generate"
+    "prisma:migrate-dev": "npx prisma migrate dev --name"
   },
   "keywords": [],
   "author": "Nazla Dio Hevin",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@prisma/client": "^5.21.0",
+    "@prisma/client": "^5.22.0",
     "@types/multer": "^1.4.12",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
@@ -25,13 +32,13 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
+    "prisma": "^5.22.0",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "jest": "^29.7.0",
     "nodemon": "^3.1.7",
-    "prisma": "^5.21.0",
     "supertest": "^7.0.0",
     "swagger-autogen": "^2.23.7"
   }

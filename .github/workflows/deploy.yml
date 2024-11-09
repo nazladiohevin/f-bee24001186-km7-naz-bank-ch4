@@ -1,0 +1,66 @@
+name: Deploy to Google App Engine (GAE)
+
+on:
+  workflow_run:
+    workflows: ['📢 CI Checks']
+    types:
+      - completed
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:    
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js and npm
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install --frozen-lockfile
+
+      - name: Google Cloud Auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Set up Cloud SDK
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: Set up Cloud SQL instance variable
+        env:
+          CLOUD_SQL_INSTANCE: ${{ secrets.INSTANCE_CONNECTION_NAME }}
+        run: |
+          echo "beta_settings:" >> app.yaml
+          echo "  cloud_sql_instances: '$CLOUD_SQL_INSTANCE'" >> app.yaml
+
+      - name: Create env.yaml with Secrets
+        run: |
+          touch env.yaml
+          echo "env_variables:" >> env.yaml
+          echo "  PORT: '${{ secrets.PORT }}'" >> env.yaml
+          echo "  NODE_ENV: '${{ secrets.NODE_ENV }}'" >> env.yaml
+          echo "  INSTANCE_CONNECTION_NAME: '${{ secrets.INSTANCE_CONNECTION_NAME }}'" >> env.yaml
+          echo "  DATABASE_URL: '${{ secrets.DATABASE_URL }}'" >> env.yaml
+          echo "  BCRYPT_SALT_ROUNDS: '${{ secrets.BCRYPT_SALT_ROUNDS }}'" >> env.yaml
+          echo "  JWT_SECRET_KEY: '${{ secrets.JWT_SECRET_KEY }}'" >> env.yaml          
+          echo "  IMAGEKIT_PUBLIC_KEY: '${{ secrets.IMAGEKIT_PUBLIC_KEY }}'" >> env.yaml
+          echo "  IMAGEKIT_SECRET_KEY: '${{ secrets.IMAGEKIT_SECRET_KEY }}'" >> env.yaml
+          echo "  IMAGEKIT_URL_ENDPOINT: '${{ secrets.IMAGEKIT_URL_ENDPOINT }}'" >> env.yaml          
+
+      - name: Deploy to Google App Engine
+        run: |
+          gcloud app deploy
+
+      - name: Clean up files
+        run: rm app.yaml env.yaml

@@ -2,7 +2,7 @@ name : Test Project
 
 on : 
   push:
-    branches: [ "main", "coba-ci/cd" ]
+    branches: [ "main", "*" ]
   pull_request:
     branches:
       - main
@@ -11,7 +11,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image: node:21
+      image: node:20
     steps:
       # Step untuk checkout kode dari repository
       - name: Checkout code
@@ -21,7 +21,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '21'
+          node-version: '20'
 
       # Install dependencies
       - name: Install dependencies
