@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Binar - Banking API",
-    "description": "Binar Gold\n\nBanking API",
+    "title": "Banking API Documentation",
+    "description": "created by **Nazla Dio Hevin**\n\n@nazlahevin",
     "version": "1.0.0"
   },
   "servers": [
@@ -31,27 +31,19 @@
     },
     {
       "name": "Transaction"
+    },
+    {
+      "name": "Profile",
+      "description": "get detatil for user"
     }
   ],
   "paths": {
-    "/api/v1/users/{id}": {
+    "/api/v1/users/20/profile": {
       "get": {
         "tags": [
           "User"
         ],
         "summary": "get user by id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID user",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -74,20 +66,17 @@
                   "type": "object"
                 },
                 "example": {
-                  "id": 17,
-                  "email": "nobita@gmail.com",
-                  "name": "Nobita Nobi",
-                  "password": "$2b$10$eLeWH3fHm1OjL2KsS44uEei.Ka1snyIszkcpzPcIYHFuAM2cMu1HO",
-                  "createdAt": "2024-10-29T13:36:27.709Z",
-                  "updateAt": null,
                   "profile": {
-                    "id": 3,
-                    "userId": 17,
-                    "address": null,
-                    "createdAt": "2024-10-29T16:13:25.155Z",
-                    "identityNumber": "23723728372",
+                    "id": 7,
+                    "userId": 20,
                     "identityType": "ktp",
-                    "updateAt": null
+                    "identityNumber": "3543434343",
+                    "address": null,
+                    "avatarUrl": "https://ik.imagekit.io/dztvhjdtp/akujgmw_Z6jo1CFLv.jpg",
+                    "avatarId": "672d2365e375273f60301cc3",
+                    "avatarName": "akujgmw_Z6jo1CFLv.jpg",
+                    "createdAt": "2024-11-07T20:28:52.097Z",
+                    "updateAt": "2024-11-07T20:30:20.206Z"
                   }
                 }
               }
@@ -110,74 +99,6 @@
                 },
                 "example": {
                   "message": "User ID not found!"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "User"
-        ],
-        "summary": "update user",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID user",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "Djenggot"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "headers": {
-              "Content-Type": {
-                "schema": {
-                  "type": "string",
-                  "example": "application/json"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                },
-                "example": {
-                  "message": "success",
-                  "data": {
-                    "id": 18,
-                    "email": "naruto@gmail.com",
-                    "name": "Djenggot",
-                    "password": "$2b$10$xY0Zs4ObkY2Hsvs8UW1/MOVr/jm2LwY0by1lXWrxkjmSSUcfDsMvy",
-                    "createdAt": "2024-10-29T17:35:59.435Z",
-                    "updateAt": "2024-10-29T18:09:58.880Z"
-                  }
                 }
               }
             }
@@ -236,36 +157,20 @@
         }
       }
     },
-    "/api/v1/users/{id}/profile": {
-      "post": {
+    "/api/v1/users/18": {
+      "put": {
         "tags": [
           "User"
         ],
-        "summary": "create user profile",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID user",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
+        "summary": "update user",
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
               "schema": {
                 "properties": {
-                  "identityType": {
+                  "name": {
                     "type": "string",
-                    "example": "ktp"
-                  },
-                  "identityNumber": {
-                    "type": "integer",
-                    "example": "4545454"
+                    "example": "Djenggot"
                   }
                 }
               }
@@ -296,35 +201,13 @@
                 "example": {
                   "message": "success",
                   "data": {
-                    "id": 4,
-                    "userId": 18,
-                    "address": null,
-                    "createdAt": "2024-10-29T18:00:15.718Z",
-                    "identityNumber": "4545454",
-                    "identityType": "ktp",
-                    "updateAt": null
+                    "id": 18,
+                    "email": "naruto@gmail.com",
+                    "name": "Djenggot",
+                    "password": "$2b$10$xY0Zs4ObkY2Hsvs8UW1/MOVr/jm2LwY0by1lXWrxkjmSSUcfDsMvy",
+                    "createdAt": "2024-10-29T17:35:59.435Z",
+                    "updateAt": "2024-10-29T18:09:58.880Z"
                   }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "headers": {
-              "Content-Type": {
-                "schema": {
-                  "type": "string",
-                  "example": "application/json"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                },
-                "example": {
-                  "message": "Profile has been created"
                 }
               }
             }
@@ -345,7 +228,7 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "example": "Uchiha Sasuke"
+                    "example": "Madara Uciha"
                   },
                   "password": {
                     "type": "integer",
@@ -353,7 +236,7 @@
                   },
                   "email": {
                     "type": "string",
-                    "example": "sasuke@gmail.com"
+                    "example": "madara@gmail.com"
                   }
                 }
               }
@@ -618,24 +501,12 @@
         }
       }
     },
-    "/api/v1/accounts/{id}": {
+    "/api/v1/accounts/2": {
       "delete": {
         "tags": [
           "Account"
         ],
         "summary": "delete account",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "account ID",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -685,24 +556,14 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/v1/accounts/3": {
       "get": {
         "tags": [
           "Account"
         ],
         "summary": "get account by id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "account ID",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -905,24 +766,12 @@
         }
       }
     },
-    "/api/v1/transactions/{id}": {
+    "/api/v1/transactions/3": {
       "get": {
         "tags": [
           "Transaction"
         ],
         "summary": "get transaction by id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "transaction id",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -994,6 +843,235 @@
                 },
                 "example": {
                   "message": "Transaction ID not found!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/15/profile": {
+      "post": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "create profile",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "identityType": {
+                    "type": "string",
+                    "example": "ktp"
+                  },
+                  "identityNumber": {
+                    "type": "integer",
+                    "example": "3543434343"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "success",
+                  "data": {
+                    "id": 13,
+                    "userId": 15,
+                    "identityType": "ktp",
+                    "identityNumber": "3543434343",
+                    "address": null,
+                    "avatarUrl": "https://ik.imagekit.io/dztvhjdtp/images_qwjdThX11.jpg",
+                    "avatarId": "672f8e63e375273f601f7fc5",
+                    "avatarName": "images_qwjdThX11.jpg",
+                    "createdAt": "2024-11-09T16:31:26.133Z",
+                    "updateAt": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "update profile",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "identityNumber": {
+                    "type": "integer",
+                    "example": "82382382"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Profile updated successfully",
+                  "profile": {
+                    "id": 13,
+                    "userId": 15,
+                    "identityType": "ktp",
+                    "identityNumber": "82382382",
+                    "address": null,
+                    "avatarUrl": "https://ik.imagekit.io/dztvhjdtp/avatar92_ayeEyHN6a.jpg",
+                    "avatarId": "672f903be375273f60280f5c",
+                    "avatarName": "avatar92_ayeEyHN6a.jpg",
+                    "createdAt": "2024-11-09T16:31:26.133Z",
+                    "updateAt": "2024-11-09T16:39:18.279Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "get profile",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "profile": {
+                    "id": 13,
+                    "userId": 15,
+                    "identityType": "ktp",
+                    "identityNumber": "3543434343",
+                    "address": null,
+                    "avatarUrl": "https://ik.imagekit.io/dztvhjdtp/images_qwjdThX11.jpg",
+                    "avatarId": "672f8e63e375273f601f7fc5",
+                    "avatarName": "images_qwjdThX11.jpg",
+                    "createdAt": "2024-11-09T16:31:26.133Z",
+                    "updateAt": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/18/profile/avatar": {
+      "delete": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "delete image avatar",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "success delete avatar",
+                  "profile": {
+                    "id": 7,
+                    "userId": 20,
+                    "identityType": "ktp",
+                    "identityNumber": "3543434343",
+                    "address": null,
+                    "avatarUrl": null,
+                    "avatarId": null,
+                    "avatarName": null,
+                    "createdAt": "2024-11-07T20:28:52.097Z",
+                    "updateAt": "2024-11-09T16:37:02.248Z"
+                  }
                 }
               }
             }
