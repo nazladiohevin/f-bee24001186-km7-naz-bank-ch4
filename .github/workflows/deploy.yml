@@ -39,7 +39,7 @@ jobs:
 
       - name: Set up Cloud SQL instance variable        
         run: |
-          echo "beta_settings:" >> app.yaml
+          echo -e "beta_settings:" >> app.yaml
           echo "  cloud_sql_instances: '${{ secrets.INSTANCE_CONNECTION_NAME }}'" >> app.yaml
       
       - name: Check app.yaml
