@@ -1,5 +1,7 @@
+import "./src/config/sentry/instrument.js";
 import express from "express";
 import { configureRoutes } from "./src/routes/index.js";
+import * as Sentry from "@sentry/node";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./swagger-output.json" with { type: "json" }
 
@@ -12,8 +14,12 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+
 // Route settings
 configureRoutes(app);
+
+// Setup Sentry
+Sentry.setupExpressErrorHandler(app);
 
 // Error handling
 app.use((err, req, res, next) => {
@@ -22,6 +28,12 @@ app.use((err, req, res, next) => {
       res.status(400).json({
           message: err.message,
       });
+  }
+
+  if (err) {
+    return res.status(500).json({
+      message: err.message,
+  });
   }
 
   res.status(500).json({
