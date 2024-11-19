@@ -70,6 +70,21 @@ class User {
       }    
     });    
   }
+
+  async updatePassword(userId, password){
+    const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS);
+    const hashPassword = await bcrypt.hash(password, saltRounds);
+
+    return this.prisma.user.update({
+      where: {
+        id: userId
+      },
+      data: {
+        password: hashPassword,
+        updateAt: this.now
+      }
+    })
+  }
 }
 
 export default User;

@@ -1,0 +1,16 @@
+<div>  
+    <h1 class="text-3xl font-bold mb-8">Notifikasi</h1>
+    <p class="text-sm mb-3">Pesan</p>  
+    <input type="text" id="message" readonly class="px-4 font-semibold bg-blue-200 w-full max-w-md rounded-lg h-12">
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+  const messageInput = document.getElementById('message');
+  socket.on("notification", (data) => {
+    messageInput.value = data.message;
+  });  
+
+</script>
