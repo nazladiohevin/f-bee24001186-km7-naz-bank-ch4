@@ -53,6 +53,12 @@ jobs:
           echo "  IMAGEKIT_PUBLIC_KEY: '${{ secrets.IMAGEKIT_PUBLIC_KEY }}'" >> env.yaml
           echo "  IMAGEKIT_SECRET_KEY: '${{ secrets.IMAGEKIT_SECRET_KEY }}'" >> env.yaml
           echo "  IMAGEKIT_URL_ENDPOINT: '${{ secrets.IMAGEKIT_URL_ENDPOINT }}'" >> env.yaml
+          echo "  BASE_URL: '${{ secrets.BASE_URL }}'" >> env.yaml
+          echo "  SENTRY_DSN: '${{ secrets.SENTRY_DSN }}'" >> env.yaml
+          echo "  MAIL_HOST: '${{ secrets.MAIL_HOST }}'" >> env.yaml
+          echo "  MAIL_USERNAME: '${{ secrets.MAIL_USERNAME }}'" >> env.yaml
+          echo "  MAIL_PASSWORD: '${{ secrets.MAIL_PASSWORD }}'" >> env.yaml
+          echo "  MAIL_PORT: '${{ secrets.MAIL_PORT }}'" >> env.yaml
    
 
       - name: Check env.yaml
